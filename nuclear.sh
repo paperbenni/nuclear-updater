@@ -13,15 +13,16 @@ if [ -e ~/.programs/nuclear ]; then
 	cd ~/.programs/nuclear
 	mv nuclear.txt old.txt
 	curl https://api.github.com/repos/nukeop/nuclear/commits/master >new.txt
-	sed -n '3p' <new.txt >~/.programs/nuclear.txt
+	cat new.txt | sed -n '3p' > nuclear.txt
 
 else
 	mkdir ~/.programs/nuclear
 fi
 
-cd .programs/nuclear
+cd ~/.programs/nuclear
 old=$(cat old.txt)
-if [[ $(<nuclear.txt) == "$old" ]]; then
+new=$(cat nuclear.txt)
+if [ "$new" = "$old" ]; then
 	./nuclear
 	exit
 fi
